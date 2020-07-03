@@ -32,7 +32,7 @@
 	mv ~/server/11/odoo/addons ~/server/11/odoo/addons_bkp
 	mkdir ~/server/11/odoo/addons
 	cd ~/server/11/odoo/addons_bkp/ #mas adelante esta carpeta se puede borrar
-	mv hw_blackbox_be hw_escpos hw_posbox_homepage hw_posbox_homepage hw_posbox_upgrade hw_scanner hw_screen web web_kanban website point_of_sale ~/server/11/odoo/addons
+	mv hw_blackbox_be hw_escpos hw_posbox_homepage hw_posbox_homepage hw_posbox_upgrade hw_proxy hw_proxy hw_scanner hw_screen web web_kanban_gauge website point_of_sale ~/server/11/odoo/addons
 
 ### Descargar hw_printer_network
 	cd ~/server/11/odoo/addons/
@@ -45,7 +45,7 @@
 ### Setear comando para hw_printer_network
 	sudo su
 	mount -o rw,remount /
-	PRINTER_PY=/home/pi/odoo/addons/hw_escpos/escpos/printer.py
+	PRINTER_PY=/home/pi/server/11/odoo/addons/hw_escpos/escpos/printer.py
 	sed -i "s;\
 	self\.device\.send(msg);\
 	if type(msg) is str:\n\
@@ -53,10 +53,11 @@
         	self\.device\.send(msg);" \
 	$PRINTER_PY
 ### Comentar la linea 354 en hw_escpos/controllers/main.py
-	nano /home/pi/odoo/addons/hw_escpos/controllets/main.py # # driver.push_task('printstatus')
+	sudo su - pi
+	nano /home/pi/server/11/odoo/addons/hw_escpos/controllers/main.py # # driver.push_task('printstatus')
 
 ### Levantar POSBOXLESS por linea de comando
-	/home/pi/odoo/odoo-bin --load=web,hw_proxy,hw_posbox_homepage,hw_posbox_upgrade,hw_scale,hw_scanner,hw_escpos,hw_printer_network #Ver como agregarlo como servicio
+	/home/pi/server/11/odoo/odoo-bin --load=web,hw_proxy,hw_posbox_homepage,hw_posbox_upgrade,hw_scale,hw_scanner,hw_escpos,hw_printer_network #Ver como agregarlo como servicio
 
 ### Ingresar al navegador
 POSBOXXLESS levanta en el puerto 8069, si esta local, ingresar a http://localhost:8069 y deberiamos ver la pagina de configuración del posbox
