@@ -9,6 +9,7 @@
 	sudo su - pi
 	sudo passwd pi # pass=raspberry
 	python3 -m venv ~/server/11
+	sudo -u postgres createuser -s pi
 	cd ~/server/11
 	source bin/activate
 
@@ -25,12 +26,13 @@
 	pip3 install wheel 
 	pip3 install -r odoo/requirements.txt
 	pip3 install phonenumbers
+	pip install pyserial pyusb==1.0.0b1 qrcode evdev babel pypdf
 
 ### (Opcional) Eliminar addons innecesarios y los que se necesitan para el POSBOXXLESS
 	mv ~/server/11/odoo/addons ~/server/11/odoo/addons_bkp
 	mkdir ~/server/11/odoo/addons
 	cd ~/server/11/odoo/addons_bkp/ #mas adelante esta carpeta se puede borrar
-	mv hw_blackbox_be hw_escpos hw_posbox_homepage hw_posbox_homepage hw_posbox_upgrade hw_scanner hw_screen web website point_of_sale ~/server/11/odoo/addons
+	mv hw_blackbox_be hw_escpos hw_posbox_homepage hw_posbox_homepage hw_posbox_upgrade hw_scanner hw_screen web web_kanban website point_of_sale ~/server/11/odoo/addons
 
 ### Descargar hw_printer_network
 	cd ~/server/11/odoo/addons/
