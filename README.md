@@ -40,4 +40,24 @@
 	mv hw_twitter_printing ~/server/11/odoo/addons # Opcional
 	rm -rf ~/server/11/odoo/addons/pos-addons
 
+### Setear comando para hw_printer_network
+	sudo su
+	mount -o rw,remount /
+	PRINTER_PY=/home/pi/odoo/addons/hw_escpos/escpos/printer.py
+	sed -i "s;\
+	self\.device\.send(msg);\
+	if type(msg) is str:\n\
+    	        msg = msg.encode(\"utf-8\")\n\
+        	self\.device\.send(msg);" \
+	$PRINTER_PY
+### Comentar la linea 354 en hw_escpos/controllers/main.py
+	nano /home/pi/odoo/addons/hw_escpos/controllets/main.py # # driver.push_task('printstatus')
+
+### Levantar POSBOXLESS por linea de comando
+	/home/pi/odoo/odoo-bin --load=web,hw_proxy,hw_posbox_homepage,hw_posbox_upgrade,hw_scale,hw_scanner,hw_escpos,hw_printer_network #Ver como agregarlo como servicio
+
+### Ingresar al navegador
+POSBOXXLESS levanta en el puerto 8069, si esta local, ingresar a http://localhost:8069 y deberiamos ver la pagina de configuración del posbox
+Si ingresamos en la configuración del POS de odoo y configuramos el posbox con esa dirección, al ingresar a la pantalla del POS, nos debería indicar el logo de la impresora, y el logo de red en color verde, si conectamos una impresora al puerto USB marca Epson TM20, al presionar sobre el icono de la impresora deberia salir impreso un ejemplo de ticket
+
 
