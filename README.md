@@ -29,5 +29,15 @@
 ### (Opcional) Eliminar addons innecesarios y los que se necesitan para el POSBOXXLESS
 	mv ~/server/11/odoo/addons ~/server/11/odoo/addons_bkp
 	mkdir ~/server/11/odoo/addons
-	cd ~/server/11/odoo/addons_bkp/
+	cd ~/server/11/odoo/addons_bkp/ #mas adelante esta carpeta se puede borrar
 	mv hw_blackbox_be hw_escpos hw_posbox_homepage hw_posbox_homepage hw_posbox_upgrade hw_scanner hw_screen web website point_of_sale ~/server/11/odoo/addons
+
+### Descargar hw_printer_network
+	cd ~/server/11/odoo/addons/
+	git clone --depth 1 --branch 11.0 --single-branch https://github.com/itpp-labs/pos-addons.git
+	cd ~/server/11/odoo/addons/pos-addons
+	mv hw_printer_network ~/server/11/odoo/addons
+	mv hw_twitter_printing ~/server/11/odoo/addons # Opcional
+	rm -rf ~/server/11/odoo/addons/pos-addons
+
+
